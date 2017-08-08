@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'DashBoard.apps.DashboardConfig',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -77,8 +78,12 @@ WSGI_APPLICATION = 'TimePiecePlatform.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'TimePiece',
+        'USER': 'timepiece',
+        'PASSWORD': '1234timepiece',
+        'HOST': 'localhost',
+        'PORT': 5432,
     }
 }
 
@@ -107,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Caracas'
 
 USE_I18N = True
 
@@ -115,8 +120,22 @@ USE_L10N = True
 
 USE_TZ = True
 
+DATE_INPUT_FORMATS = ('%d-%m-%Y','%Y-%m-%d')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "ProjectManagement/static"),
+)
+
+MEDIA_URL = '/static/media/'
+MEDIA_ROOT = (
+            os.path.join(BASE_DIR, "TimePiecePlatform/static/media/")
+)
+
+# This block will be used for the sending of email(SMTP) through SenGrid API configuration.
+# https://sendgrid.com/docs/Integrate/Frameworks/django.html
+
