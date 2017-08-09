@@ -56,7 +56,7 @@ ROOT_URLCONF = 'TimePiecePlatform.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'TimePiecePlatform/templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -128,7 +128,7 @@ DATE_INPUT_FORMATS = ('%d-%m-%Y','%Y-%m-%d')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "ProjectManagement/static"),
+    os.path.join(BASE_DIR, "TimePiecePlatform/static"),
 )
 
 MEDIA_URL = '/static/media/'
