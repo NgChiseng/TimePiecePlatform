@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'materializeform',
+    'materializecssform',
+    'materialize_forms',
     'DashBoard.apps.DashboardConfig',
     'users.apps.UsersConfig',
 ]

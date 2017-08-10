@@ -1627,7 +1627,7 @@
 }
 
 .background-user {
-  background-image: url("../images/background.png") !important;
+  background-image: url("../images/user-bg.jpg") !important;
 }
 /*** Colors ***/
 /*** Badges ***/
@@ -5814,7 +5814,7 @@ small {
 .btn, .btn-large {
   text-decoration: none;
   color: #FFF;
-  background-color: #7c4dff;
+  background-color: #4ed7c5; /* CAMBIA EL COLOR DEL BOTON */
   text-align: center;
   letter-spacing: .5px;
   -webkit-transition: 0.2s ease-out;
@@ -5824,7 +5824,7 @@ small {
   transition: 0.2s ease-out;
   cursor: pointer; }
   .btn:hover, .btn-large:hover {
-    background-color:#651fff ; }
+    background-color:#4ed7c5 ; } /* CAMBIA EL COLOR DEL BOTON RESALTADO */
 
 .btn-floating {
   display: inline-block;
@@ -6316,8 +6316,8 @@ textarea.materialize-textarea {
   input[type=number]:focus:not([readonly]),
   input[type=search]:focus:not([readonly]),
   textarea.materialize-textarea:focus:not([readonly]) {
-    border-bottom: 1px solid #651fff ;
-    box-shadow: 0 1px 0 0 #651fff ; }
+    border-bottom: 1px solid #5abcd8 ; /* CAMBIA EL COLOR DE LA LINEA DE INPUT */
+    box-shadow: 0 1px 0 0 #5abcd8 ; }
   input[type=text]:focus:not([readonly]) + label,
   input[type=password]:focus:not([readonly]) + label,
   input[type=email]:focus:not([readonly]) + label,
@@ -6329,7 +6329,7 @@ textarea.materialize-textarea {
   input[type=number]:focus:not([readonly]) + label,
   input[type=search]:focus:not([readonly]) + label,
   textarea.materialize-textarea:focus:not([readonly]) + label {
-    color: #651fff ; }
+    color: #5abcd8 ; } /*CAMBIA EL COLOR DE LOS HINTS DE INPUT */
   input[type=text].valid, input[type=text]:focus.valid,
   input[type=password].valid,
   input[type=password]:focus.valid,
@@ -6474,7 +6474,7 @@ textarea.materialize-textarea {
     -ms-transition: color 0.2s;
     transition: color 0.2s; }
     .input-field .prefix.active {
-      color: #7c4dff ; } /*CAMBIA EL COLOR DE LOS �CONOS!*/
+      color: #5abcd8 ; } /*CAMBIA EL COLOR DE LOS �CONOS!*/
   .input-field .prefix ~ input,
   .input-field .prefix ~ textarea {
     margin-left: 3rem;
@@ -6720,8 +6720,8 @@ form p:last-child {
   height: 22px;
   border-top: 2px solid transparent;
   border-left: 2px solid transparent;
-  border-right: 2px solid #6200ea ;
-  border-bottom: 2px solid #6200ea ;
+  border-right: 2px solid #5abcd8 ; /* CAMBIA EL COLOR DEL CHECK */
+  border-bottom: 2px solid #5abcd8 ;
   -webkit-transform: rotate(40deg);
   -moz-transform: rotate(40deg);
   -ms-transform: rotate(40deg);

@@ -20,5 +20,5 @@ import users
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # above maps any URLs starting with users/ to be handled by the users application
-    url(r'^users/', include('users.urls')),
+    url(r'^', include('users.urls')),
 ]

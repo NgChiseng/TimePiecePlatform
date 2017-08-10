@@ -1174,9 +1174,9 @@ tr.group:hover {
   letter-spacing: 2px;
   font-size: 0.8rem;
 }
-.profile-image-login{
-  width: 150px;
-  height: 150px !important;
+.profile-image-login{ /* CAMBIA EL TAMANIO DE LA IMAGEN DEL LOGIN */
+  width: 220px;
+  height: 80px !important;
 }
 
 .login-text {
@@ -1479,7 +1479,7 @@ footer.page-footer {
 }
 
 #login{
-background: url(../images/background.png) no-repeat center center fixed;
+background: url(../images/bg-profile.jpg) no-repeat center center fixed; /* CAMBIA EL BACKGROUND DEL LOGIN */
 -webkit-background-size: cover;
 -moz-background-size: cover;
 -o-background-size: cover;

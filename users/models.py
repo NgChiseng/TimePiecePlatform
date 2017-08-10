@@ -27,12 +27,14 @@ from django.db import models
 # @references [https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html]
 class UserProfile(models.Model):
 
-    user = models.OneToOneField(User)
+    user_fk = models.OneToOneField(User)
     phone = models.CharField(max_length=11, blank=True)
     image_profile = models.ImageField(upload_to='images/', blank=True)
     address = models.TextField(max_length=128, blank=True)
     points_accumulated = models.IntegerField(default=0)
+    key_activation = models.CharField(max_length=40, blank=True)
+    date_key_expiration = models.DateTimeField(auto_now_add=True)
     # badge_acquired = models.ForeignKey('Rating')
 
     def __str__(self):
-        return self.user.username
+        return self.user_fk.username
