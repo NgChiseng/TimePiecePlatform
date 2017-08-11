@@ -29,9 +29,12 @@ def log_in(request):
             print("Entra en Login form")
             user_field = request.POST['username']
             password = request.POST['password']
+            if user_field == '' or password == '':
+                form.add_error(None, "Your data is incorrect.")
+                return render(request, 'page-login.html', {'form': form})
             user_exists = search_user(user_field)
 
-            if user_exists is not None:
+            if (user_exists is not None):
                 print("Entra en login user_exist")
                 if user_exists.is_active:
                     print("Entra en login activate")
@@ -97,13 +100,16 @@ def search_user(user_field=None):
 class FirstSession(TemplateView):
     template_name = 'activation-key-verification.html'
 
-    def activation_key_verification(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         post_values = request.POST.copy()
         form = ActivationKeyVerificationForm(post_values)
         print(form.is_valid())
         if form.is_valid():
             activation_key = self.kwargs['activationKey']
+            print("Obtuvo activation key")
+            print(activation_key)
             user = UserProfile.objects.get(key_activation=activation_key)
+            print("Obtuvo user")
             username = User.objects.get(pk=user.user_fk.pk)
             print(username.pk)
             print(activation_key)
@@ -118,7 +124,7 @@ class FirstSession(TemplateView):
                 print(username.password)
                 username.save()
                 form.add_error(None, 'The password was successfully changed.')
-                return render(request, 'page-login.html', {'form': form})
+                return HttpResponseRedirect('/users')
             else:
                 print("else")
                 form.add_error(None,'Password do not match, please try again.')

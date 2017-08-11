@@ -11,9 +11,9 @@
   <title>Log In - TimePiece</title>
 
   <!-- Favicons-->
-  <link rel="icon" href="../static/images/logo-timepiece.png" sizes="32x32">
+  <link rel="icon" href="{% static 'images/logo-timepiece.png' %}" sizes="32x32">
   <!-- Favicons-->
-  <link rel="apple-touch-icon-precomposed" href="../static/images/favicon/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon-precomposed" href="{% static 'images/favicon/apple-touch-icon-152x152.png' %}">
   <!-- For iPhone -->
   <meta name="msapplication-TileColor" content="#00bcd4">
   <meta name="msapplication-TileImage" content="static/images/favicon/mstile-144x144.png">
@@ -21,22 +21,22 @@
 
   <!-- CORE CSS-->
   
-  <link href="../static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <link href="../static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <link href="../static/css/page-center.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="{% static 'css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="{% static 'css/page-center.css' %}" type="text/css" rel="stylesheet" media="screen,projection">
 
   <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-  <link href="../static/css/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <link href="../static/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="{% static 'css/prism.css' %}" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="{% static 'js/plugins/perfect-scrollbar/perfect-scrollbar.css' %}" type="text/css" rel="stylesheet" media="screen,projection">
   
 </head>
 
 <body id = "login">
   <!-- Start Page Loading -->
   <div id="loader-wrapper">
-      <div id="loader"></div>        
-      <div class="loader-section section-left"></div>
-      <div class="loader-section section-right"></div>
+    <div id="loader"></div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
   </div>
   <!-- End Page Loading -->
 
@@ -44,10 +44,9 @@
     <div class="col s12 z-depth-4 card-panel">
       <form class="login-form" method="post">
         {% csrf_token %}
-
-          <div class="input-field col s12 center">
-            <img src="../static/images/logo-timepiece.png" alt="" class="responsive-img valign profile-image-login">
-          </div>
+        <div class="input-field col s12 center">
+          <img src="{% static 'images/logo-timepiece.png' %}" alt="TimePiece Log" class="responsive-img valign profile-image-login">
+        </div>
        
         <div class="row margin">
           <div class="input-field col s12">
@@ -63,22 +62,18 @@
             <label for="password">Password</label>
           </div>
         </div>
-        <div class="row">          
+        <div class="row">
           <div class="input-field col s12 m12 l12  login-text">
-              <input type="checkbox" id="remember-me" />
-              <label for="remember-me">Remember</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-              <button class="btn waves-effect waves-light col s12" type="submit" >Login</button>
+            <button class="btn waves-effect waves-light col s12" type="submit" >Login</button>
           </div>
         </div>
         <div class="row">
-          <div class="input-field col s6 m6 l6">
-          </div>
-          <div class="input-field col s6 m6 l6">
-              <p class="margin right-align medium-small">Forgot your password?</p>
+          <div class="input-field col s12">
+            <p class="margin center-align medium-small">Forgot your password?</p>
           </div>
         </div>
 
@@ -91,28 +86,29 @@
     ================================================ -->
 
   <!-- jQuery Library -->
-  <script type="text/javascript" src="../static/js/jquery-1.11.2.min.js"></script>
+  <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
   <!--materialize js-->
-  <script type="text/javascript" src="../static/js/materialize.js"></script>
+  <script type="text/javascript" src="{% static 'js/materialize.js' %}"></script>
   <!--prism-->
-  <script type="text/javascript" src="../static/js/prism.js"></script>
+  <script type="text/javascript" src="{% static 'js/prism.js' %}"></script>
   <!--scrollbar-->
-  <script type="text/javascript" src="../static/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+  <script type="text/javascript" src="{% static 'js/plugins/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
 
   <!--plugins.js - Some Specific JS codes for Plugin Settings-->
-  <script type="text/javascript" src="../static/js/plugins.js"></script>
-<script type="text/javascript">
-{% if form.errors %}
-  {% for field in form %}
-    {% for error in field.errors %}
+  <script type="text/javascript" src="{% static 'js/plugins.js' %}"></script>
+  <script type="text/javascript">
+  {% if form.errors %}
+    {% for field in form %}
+      {% for error in field.errors %}
+        Materialize.toast('{{ error|escape }}', 4000);
+      {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
       Materialize.toast('{{ error|escape }}', 4000);
     {% endfor %}
-  {% endfor %}
-  {% for error in form.non_field_errors %}
-    Materialize.toast('{{ error|escape }}', 4000);
-  {% endfor %}
-{% endif %}
+  {% endif %}
+  </script>
 
-</script>
 </body>
+
 </html>
