@@ -100,6 +100,17 @@ def search_user(user_field=None):
 class FirstSession(TemplateView):
     template_name = 'activation-key-verification.html'
 
+    # Function that render the activation verification screen for change the admins's password in their first session.
+    #
+    # @date [09/08/2017]
+    #
+    # @author [Chiseng Ng]
+    #
+    # @reference [https://github.com/patriv/ProjectManagement/blob/master/users/views.py]
+    #
+    # @param [HttpRequest] request Request of the page.
+    #
+    # @returns [HttpResponse]
     def post(self, request, *args, **kwargs):
         post_values = request.POST.copy()
         form = ActivationKeyVerificationForm(post_values)
@@ -131,3 +142,32 @@ class FirstSession(TemplateView):
                 return render(request, 'activation-key-verification.html', {'form': form})
         else:
             return render(request, 'activation-key-verification.html', {'form': form})
+
+# Class that will render the page-admins.html to show the admin existing in the TimePiece Platform.
+class Administration(TemplateView):
+    template_name = 'page-admins.html'
+
+    # Function that will return the admins data context to the screen of page-admins.html
+    #
+    # @date [15/08/2017]
+    #
+    # @author [Chiseng Ng]
+    #
+    # @reference [https://github.com/patriv/ProjectManagement/blob/master/users/views.py]
+    #
+    # @param [HttpRequest] request Request of the page.
+    #
+    # @param [AdministrationObject] self The self object that inherited the TemplateView property and used to render the
+    # screen.
+    #
+    # @param [reference] **kwargs Reference that link the context param with the key corresponding to the html file.
+    #
+    # @returns [HttpResponse]
+    def get_context_data(self, **kwargs):
+        context = super(Administration, self).get_context_data(**kwargs)
+        print("get users")
+        admin = UserProfile.objects.all()
+        for i in admin:
+            print(i.phone)
+        context['admins'] = admin
+        return context

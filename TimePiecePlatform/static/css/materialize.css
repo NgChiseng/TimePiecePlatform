@@ -2357,7 +2357,9 @@ td, th {
 
 .secondary-content {
   float: right;
-  color: #ff4081; }
+  position: relative; /* ESTO CENTRA LOS FLOATING https://codepen.io/alexandredees/pen/ojaFr*/
+  left: -45%; /* or right 50% */
+  color: #4ed7c5; }
 
 span.badge {
   min-width: 3rem;
@@ -5836,7 +5838,7 @@ small {
   height: 37px;
   line-height: 37px;
   padding: 0;
-  background-color: #ff4081;
+  background-color: #4ed7c5; /* CAMBIA EL COLOR DE LOS FLOATING */
   border-radius: 50%;
   transition: .3s;
   cursor: pointer;
