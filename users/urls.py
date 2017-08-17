@@ -10,5 +10,7 @@ urlpatterns = [
 
     url(r'^administration', Administration.as_view(), name='administration'),
 
-    # url(r'^register-admin', RegisterAdmin.as_view(), name='register_admin'),
+    url(r'^register-admin', RegisterAdmin.as_view(), name='register_admin'),
+
+    url (r'^customers', Customers.as_view(), name='customers'),
 ]

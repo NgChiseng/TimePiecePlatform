@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'materializeform',
     'materializecssform',
     'materialize_forms',
-    'DashBoard.apps.DashboardConfig',
+    'dashboard.apps.DashboardConfig',
     'users.apps.UsersConfig',
 ]
 

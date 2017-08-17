@@ -21,4 +21,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # above maps any URLs starting with users/ to be handled by the users application
     url(r'^', include('users.urls')),
+    # above maps any URLs starting with dashboard/ to be handled by the users application
+    url(r'^', include('dashboard.urls')),
 ]

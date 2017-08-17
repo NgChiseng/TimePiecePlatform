@@ -1,0 +1,262 @@
+{% extends "base-dashboard.html" %}
+{% load staticfiles %}
+
+{% block head %}
+
+<meta name="description" content="Page that contains the listing of the all TimePiece Admins.">
+<meta name="keywords" content="TimePiece,Admins,">
+<title>Products Canceled - TimePiece</title>
+
+{% endblock head %}
+
+{% block content %}
+
+        <!--breadcrumbs start-->
+        <div id="breadcrumbs-wrapper" class=" grey lighten-3">
+          <div class="container">
+            <div class="row">
+              <div class="col s12 m6 l6">
+                <h5 class="breadcrumbs-title">Productos Cancelados</h5>
+                <ol class="breadcrumb">
+                    <li><a href="#">Productos</a></li>
+                    <li class="active">Cancelados</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--breadcrumbs end-->
+
+        <!--start container-->
+        <div class="container">
+          <div class="section">
+
+            <div class="divider"></div>
+            
+            <!--DataTables example-->
+            <div id="table-datatables">
+              
+                <div class="col s12 m8 l9">
+                  <table id="data-table-simple" class="responsive-table display" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Titulo</th>
+                            <th>Vendedor</th>
+                            <th>Comprador</th>
+                            <th>Precio</th>
+                            <th>Unidad</th>
+                            <th>Cantidad</th>
+                            <th>Pagados</th>
+                            <th>Fecha de Compra</th>
+                            <th>Canc. Vendedor</th>
+                            <th>Canc. Comprador</th>
+                            <th>Devol. Pago</th>
+                        </tr>
+                    </thead>
+                 
+                    <tfoot>
+                        <tr>
+                            <th>Titulo</th>
+                            <th>Vendedor</th>
+                            <th>Comprador</th>
+                            <th>Precio</th>
+                            <th>Unidad</th>
+                            <th>Cantidad</th>
+                            <th>Pagados</th>
+                            <th>Fecha de Compra</th>
+                            <th>Canc. Vendedor</th>
+                            <th>Canc. Comprador</th>
+                            <th>Devol. Pago</th>
+                        </tr>
+                    </tfoot>
+                 
+                    <tbody>
+                        <!--{#% for user in admins %#}
+                        <tr>
+                            <td>{#  #}{ user.user_fk.username }}</td>
+                            <td>{#  #}{ user.user_fk.email }}</td>
+                            <td>{#  #}{ user.phone }}</td>
+                            {#% if user.user_fk.is_active %#}
+                              <td>Active</td>
+                            {#% else %#}
+                              <td>Inactive</td>
+                            {#% endif %#}
+                            <td>{#  #}{ user.user_fk.date_joined }}</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        {#% endfor %#}-->
+                        <!--tr>
+                          <td>Zapatos deportivos azules Nike</td>
+                          <td>TigerNixon</td>
+                          <td>AiriSatou</td>
+                          <td>40$</td>
+                          <td>Par</td>
+                          <td>2</td>
+                          <td>80$</td>
+                          <td>Aug. 16, 2017, 2:33 pm</td>
+                          <td>Aug. 16, 2017, 5:45 pm</td>
+                          <td>Aug. 17, 2017, 4:00 pm</td>
+                          <td>Pago por Liberar</td>
+                        </--tr>
+                        <!--<tr>
+                            <td>GarrettWinters</td>
+                            <td>Winters@hotmail.com</td>
+                            <td>02121234567</td>
+                            <td>Active</td>
+                            <td>2011/07/25</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>AshtonCox</td>
+                            <td>Zyrus@gmail.com</td>
+                            <td>04141234567</td>
+                            <td>Active</td>
+                            <td>2009/01/12</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CedricKelly</td>
+                            <td>CedriK123@gmail.com</td>
+                            <td>04128907645</td>
+                            <td>Inactive</td>
+                            <td>2012/03/29</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>AiriSatou</td>
+                            <td>SatouAiri@idbcgroup.com</td>
+                            <td>02341234567</td>
+                            <td>Active</td>
+                            <td>2008/11/28</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>BrielleWilliamson</td>
+                            <td>JackMa@shanks.com</td>
+                            <td>45531234567</td>
+                            <td>Inactive</td>
+                            <td>2012/12/02</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>HerrodChandler</td>
+                            <td>Herrod2000@hotmail.com</td>
+                            <td>01120987654</td>
+                            <td>Active</td>
+                            <td>2012/08/06</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>RhonaDavidson</td>
+                            <td>Rhona@tegrationSpecialist.com</td>
+                            <td>02555672349</td>
+                            <td>Active</td>
+                            <td>2010/10/14</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ColleenHurst</td>
+                            <td>Coll@JavascriptDeveloper.com</td>
+                            <td>04165634975</td>
+                            <td>Inactive</td>
+                            <td>2009/09/15</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SonyaFrost</td>
+                            <td>sonf@SoftwareEngineer.com</td>
+                            <td>02223454367</td>
+                            <td>Active</td>
+                            <td>2008/12/13</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>JenaGaines</td>
+                            <td>jena@digitel.com</td>
+                            <td>04551239876</td>
+                            <td>Active</td>
+                            <td>2008/12/19</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>QuinnFlynn</td>
+                            <td>quinn@supportlead.com</td>
+                            <td>04142346789</td>
+                            <td>Active</td>
+                            <td>2013/03/03</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Charde</td>
+                            <td>ngyu@regionald.com</td>
+                            <td>04122409821</td>
+                            <td>Active</td>
+                            <td>2008/10/16</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>-->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div> 
+            <br>
+            <div class="divider"></div> 
+                       
+          </div>
+
+        </div>
+        <!--end container-->
+
+{% endblock content %}

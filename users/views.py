@@ -31,7 +31,7 @@ def log_in(request):
             password = request.POST['password']
             if user_field == '' or password == '':
                 form.add_error(None, "Your data is incorrect.")
-                return render(request, 'page-login.html', {'form': form})
+                return render(request, 'login.html', {'form': form})
             user_exists = search_user(user_field)
 
             if (user_exists is not None):
@@ -45,7 +45,7 @@ def log_in(request):
                         return HttpResponseRedirect('/admin')
                     else:
                         form.add_error(None, "Your data is incorrect.")
-                        return render(request, 'page-login.html', {'form': form})
+                        return render(request, 'login.html', {'form': form})
                 else:
                     print("no active")
                     new_user = UserProfile.objects.get(user_fk=user_exists.pk)
@@ -56,18 +56,18 @@ def log_in(request):
                         return HttpResponseRedirect(reverse('first_session', kwargs={'activationKey': activation_key}))
                     else:
                         form.add_error(None, "Your data is incorrect.")
-                        return render(request, 'page-login.html', {'form': form})
+                        return render(request, 'login.html', {'form': form})
 
             else:
                 form.add_error(None, "Your data is incorrect.")
-                return render(request, 'page-login.html', {'form': form})
+                return render(request, 'login.html', {'form': form})
     else:
         print("Entra en login else")
         form = LoginForm()
 
     context = {'form': form}
     print("Login a punto de render")
-    return render(request, 'page-login.html', context)
+    return render(request, 'login.html', context)
 
 
 # Function that verify if the user name or email belong to the DataBase.
@@ -143,11 +143,11 @@ class FirstSession(TemplateView):
         else:
             return render(request, 'activation-key-verification.html', {'form': form})
 
-# Class that will render the page-admins.html to show the admin existing in the TimePiece Platform.
+# Class that will render the admins.html to show the admin existing in the TimePiece Platform.
 class Administration(TemplateView):
-    template_name = 'page-admins.html'
+    template_name = 'admins.html'
 
-    # Function that will return the admins data context to the screen of page-admins.html
+    # Function that will return the admins data context to the screen of admins.html
     #
     # @date [15/08/2017]
     #
@@ -171,3 +171,11 @@ class Administration(TemplateView):
             print(i.phone)
         context['admins'] = admin
         return context
+
+# Class that will render the admins-register.html to show the admin existing in the TimePiece Platform.
+class RegisterAdmin(TemplateView):
+    template_name = 'admins-register.html'
+
+# Class that will render the customers.html to show the admin existing in the TimePiece Platform.
+class Customers(TemplateView):
+    template_name = 'customers.html'

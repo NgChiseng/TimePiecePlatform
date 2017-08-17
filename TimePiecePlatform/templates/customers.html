@@ -1,0 +1,266 @@
+{% extends "base-dashboard.html" %}
+{% load staticfiles %}
+
+{% block head %}
+
+<meta name="description" content="Page that contains the listing of the all TimePiece Admins.">
+<meta name="keywords" content="TimePiece,Admins,">
+<title>Customers - TimePiece</title>
+
+{% endblock head %}
+
+{% block content %}
+
+        <!--breadcrumbs start-->
+        <div id="breadcrumbs-wrapper" class=" grey lighten-3">
+          <div class="container">
+            <div class="row">
+              <div class="col s12 m6 l6">
+                <h5 class="breadcrumbs-title">Clientes</h5>
+                <ol class="breadcrumb">
+                    <li><a href="#">Usuarios</a></li>
+                    <li class="activo">Clientes</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--breadcrumbs end-->
+
+        <!--start container-->
+        <div class="container">
+          <div class="section">
+
+            <div class="divider"></div>
+            
+            <!--DataTables example-->
+            <div id="table-datatables">
+              
+                <div class="col s12 m8 l9">
+                  <table id="data-table-simple" class="responsive-table display" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>NombreUsuario</th>
+                            <th>Email</th>
+                            <th>Telefono</th>
+                            <th>Puntos</th>
+                            <th>Estado</th>
+                            <th>Fecha Inicio</th>
+                            <th>Bloquear</th>
+                        </tr>
+                    </thead>
+                 
+                    <tfoot>
+                        <tr>
+                            <th>NombreUsuario</th>
+                            <th>Email</th>
+                            <th>Telefono</th>
+                            <th>Puntos</th>
+                            <th>Estado</th>
+                            <th>Fecha Inicio</th>
+                            <th>Bloquear</th>
+                        </tr>
+                    </tfoot>
+                 
+                    <tbody>
+                        <!--{#% for user in admins %#}
+                        <tr>
+                            <td>{#  #}{ user.user_fk.username }}</td>
+                            <td>{#  #}{ user.user_fk.email }}</td>
+                            <td>{#  #}{ user.phone }}</td>
+                            {#% if user.user_fk.is_activo %#}
+                              <td>Activo</td>
+                            {#% else %#}
+                              <td>Inactivo</td>
+                            {#% endif %#}
+                            <td>{#  #}{ user.user_fk.date_joined }}</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        {#% endfor %#}-->
+                        <tr>
+                            <td>TigerNixon</td>
+                            <td>TigerNixon@gmail.com</td>
+                            <td>04121234567</td>
+                            <td>4</td>
+                            <td>Activo</td>
+                            <td>Aug. 11, 2017, 2:13 pm</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>GarrettWinters</td>
+                            <td>Winters@hotmail.com</td>
+                            <td>02121234567</td>
+                            <td>2</td>
+                            <td>Activo</td>
+                            <td>Aug. 11, 2017, 2:14 pm</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>AshtonCox</td>
+                            <td>Zyrus@gmail.com</td>
+                            <td>04141234567</td>
+                            <td>5</td>
+                            <td>Activo</td>
+                            <td>Aug. 11, 2017, 2:20 pm</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CedricKelly</td>
+                            <td>CedriK123@gmail.com</td>
+                            <td>04128907645</td>
+                            <td>4</td>
+                            <td>Inactivo</td>
+                            <td>Aug. 11, 2017, 2:32 pm</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>AiriSatou</td>
+                            <td>SatouAiri@idbcgroup.com</td>
+                            <td>02341234567</td>
+                            <td>10</td>
+                            <td>Activo</td>
+                            <td>Aug. 11, 2017, 2:39 pm</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>BrielleWilliamson</td>
+                            <td>JackMa@shanks.com</td>
+                            <td>45531234567</td>
+                            <td>0</td>
+                            <td>Inactivo</td>
+                            <td>Aug. 11, 2017, 2:44 pm</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>HerrodChandler</td>
+                            <td>Herrod2000@hotmail.com</td>
+                            <td>01120987654</td>
+                            <td>1</td>
+                            <td>Activo</td>
+                            <td>Aug. 11, 2017, 2:47 pm</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>RhonaDavidson</td>
+                            <td>Rhona@tegrationSpecialist.com</td>
+                            <td>02555672349</td>
+                            <td>8</td>
+                            <td>Activo</td>
+                            <td>Aug. 11, 2017, 2:48 pm</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ColleenHurst</td>
+                            <td>Coll@JavascriptDeveloper.com</td>
+                            <td>04165634975</td>
+                            <td>6</td>
+                            <td>Inactivo</td>
+                            <td>Aug. 11, 2017, 2:50 pm</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SonyaFrost</td>
+                            <td>sonf@SoftwareEngineer.com</td>
+                            <td>02223454367</td>
+                            <td>3</td>
+                            <td>Activo</td>
+                            <td>Aug. 11, 2017, 2:55 pm</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>JenaGaines</td>
+                            <td>jena@digitel.com</td>
+                            <td>04551239876</td>
+                            <td>9</td>
+                            <td>Activo</td>
+                            <td>Aug. 11, 2017, 3:10 pm</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>QuinnFlynn</td>
+                            <td>quinn@supportlead.com</td>
+                            <td>04142346789</td>
+                            <td>2</td>
+                            <td>Activo</td>
+                            <td>Aug. 11, 2017, 3:20 pm</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Charde</td>
+                            <td>ngyu@regionald.com</td>
+                            <td>04122409821</td>
+                            <td>12</td>
+                            <td>Activo</td>
+                            <td>Aug. 11, 2017, 3:27 pm</td>
+                            <td>
+                              <a href="" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                                <i class="mdi-navigation-close"></i>
+                              </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div> 
+            <br>
+            <div class="divider"></div> 
+                       
+          </div>
+
+        </div>
+        <!--end container-->
+
+{% endblock content %}

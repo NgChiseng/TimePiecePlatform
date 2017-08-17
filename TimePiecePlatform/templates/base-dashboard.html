@@ -1,6 +1,6 @@
 {% load staticfiles %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-us">
 
 <!--================================================================================
 	Item Name: Materialize - Material Design Admin Template
@@ -21,7 +21,7 @@
   {% endblock head %}
 
   <!-- Favicons-->
-  <link rel="icon" href="{% static 'images/favicon/favicon-32x32.png' %}" sizes="32x32">
+  <link rel="icon" href="{% static 'images/icon-timepiece.png' %}" sizes="32x32">
   <!-- Favicons-->
   <link rel="apple-touch-icon-precomposed" href="{% static 'images/favicon/apple-touch-icon-152x152.png' %}">
   <!-- For iPhone -->
@@ -97,65 +97,69 @@
                       </div>
                       <div class="col col s8 m8 l8">
                           <ul id="profile-dropdown" class="dropdown-content">
-                              <li><a href="#"><i class="mdi-action-face-unlock"></i> Profile</a>
+                              <li><a href="#"><i class="mdi-action-face-unlock"></i> Perfil</a>
                               </li>
-                              <li><a href="#"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
+                              <li><a href="#"><i class="mdi-hardware-keyboard-tab"></i> Salir</a>
                               </li>
                           </ul>
                           <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown">John Doe<i class="mdi-navigation-arrow-drop-down right"></i></a>
                           <!--a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown">{#  #}{user.first_name}} {#  #}{user.last_name }}<i class="mdi-navigation-arrow-drop-down right"></i></a-->
-                          <p class="user-roal">Administrator</p>
+                          <p class="user-roal">Administrador</p>
                       </div>
                   </div>
               </li>
               <li class="no-padding">
                   <ul class="collapsible collapsible-accordion">
-                      <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-social-people"></i> Users </a>
+                      <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-social-people"></i> Usuarios </a>
                           <div class="collapsible-body">
                               <ul>
-                                  <li><a href="css-typography.html">Customer</a>
+                                  <li><a href="{% url 'customers' %}">Clientes</a>
                                   </li>
-                                  <li><a href="{% url 'administration' %}">Administration</a>
+                                  <li><a href="{% url 'administration' %}">Administracion</a>
                                   </li>
                               </ul>
                           </div>
                       </li>
-                      <li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i class="mdi-maps-local-shipping"></i> Products </a>
+                      <li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i class="mdi-maps-local-shipping"></i> Productos </a>
                           <div class="collapsible-body">
                               <ul>
-                                  <li><a href="ui-buttons.html">Published</a>
+                                  <li><a href="{% url 'products_publication' %}">Publicados</a>
                                   </li>
-                                  <li><a href="ui-badges.html">In Process</a>
+                                  <li><a href="{% url 'products_in_process' %}">En proceso</a>
                                   </li>
-                                  <li><a href="ui-cards.html">Finished</a>
+                                  <li><a href="{% url 'products_finished' %}">Finalizados</a>
+                                  </li>
+                                  <li><a href="{% url 'products_canceled' %}">Cancelados</a>
                                   </li>
                               </ul>
                           </div>
                       </li>
-                      <li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i class="mdi-editor-format-paint"></i> Services </a>
+                      <li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i class="mdi-editor-format-paint"></i> Servicios </a>
                           <div class="collapsible-body">
                               <ul>
-                                  <li><a href="table-basic.html">Published</a>
+                                  <li><a href="{% url 'services_publication' %}">Publicados</a>
                                   </li>
-                                  <li><a href="table-data.html">In Process</a>
+                                  <li><a href="{% url 'services_in_process' %}">En proceso</a>
                                   </li>
-                                  <li><a href="ui-cards.html">Finished</a>
+                                  <li><a href="{% url 'services_finished' %}">Finalizados</a>
+                                  </li>
+                                  <li><a href="{% url 'services_canceled' %}">Cancelados</a>
                                   </li>
                               </ul>
                           </div>
                       </li>
-                      <li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i class="mdi-action-favorite"></i> Donations </a>
+                      <li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i class="mdi-action-favorite"></i> Donaciones </a>
                           <div class="collapsible-body">
                               <ul>
-                                  <li><a href="form-elements.html">Published</a>
+                                  <li><a href="{% url 'donations_publication' %}">Publicadas</a>
                                   </li>
-                                  <li><a href="form-layouts.html">Done</a>
+                                  <li><a href="{% url 'donations_done' %}">Hechas</a>
                                   </li>
                               </ul>
                           </div>
                       </li>
-                      <li class="bold"><a href="index.html" class="waves-effect waves-cyan"><i class="mdi-action-payment"></i> Payments </a>
-                      <li class="bold"><a href="index.html" class="waves-effect waves-cyan"><i class="mdi-action-shopping-cart"></i> Shopping Bag</a>
+                      <li class="bold"><a href="" class="waves-effect waves-cyan"><i class="mdi-action-payment"></i> Pagos </a>
+                      <li class="bold"><a href="" class="waves-effect waves-cyan"><i class="mdi-action-shopping-cart"></i> Carrito de Compra</a>
                   </ul>
               </li>
               <li class="li-hover"><div class="divider"></div></li>
