@@ -139,6 +139,16 @@ MEDIA_ROOT = (
             os.path.join(BASE_DIR, "TimePiecePlatform/static/media/")
 )
 
-# This block will be used for the sending of email(SMTP) through SenGrid API configuration.
+# This block will be used for the sending of email(SMTP) through SenGrid API configuration. But in this case, was not
+# used SenGrid due to problems with the account creation, instead was used Gmail API.
 # https://sendgrid.com/docs/Integrate/Frameworks/django.html
+# https://blog.khophi.co/sending-django-emails-example/
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = '2017timepiece2017@gmail.com'
+EMAIL_HOST_PASSWORD = '1234timepiece'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
