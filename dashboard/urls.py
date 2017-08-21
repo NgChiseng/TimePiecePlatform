@@ -24,11 +24,9 @@ urlpatterns = [
 
     url(r'^donations-done/$', DonationsDone.as_view(), name='donations_done'),
 
-    #url(r'^first-session/(?P<activationKey>\w+)$', FirstSession.as_view(), name='first_session'),
+    url(r'^payments-registered/$', PaymentsRegistered.as_view(), name='payments_registered'),
 
-    #url(r'^administration', Administration.as_view(), name='administration'),
+    url(r'^payments-transaction/$', PaymentsTransaction.as_view(), name='payments_transaction'),
 
-    #url(r'^register-admin', RegisterAdmin.as_view(), name='register_admin'),
-
-    #url (r'^customers', Customers.as_view(), name='customers'),
+    url(r'^shopping-car/$', ShoppingCar.as_view(), name='shopping_car'),
 ]

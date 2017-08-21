@@ -2361,6 +2361,14 @@ td, th {
   left: -45%; /* or right 50% */
   color: #4ed7c5; }
 
+.right-content { /* CREADO */
+  float: right;
+  color: #4ed7c5; }
+
+.left-content { /* CREADO */
+  float: left;
+  color: #d7252d; }
+
 span.badge {
   min-width: 3rem;
   padding: 0 6px;
