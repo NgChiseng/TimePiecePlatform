@@ -1,11 +1,19 @@
+import datetime
+import hashlib
+import random
+
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+
+from django.core.mail import EmailMessage
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse
+from django.template.loader import get_template
+from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView
 from users.models import UserProfile
-from users.forms import LoginForm, ActivationKeyVerificationForm
+from users.forms import LoginForm, ActivationKeyVerificationForm, ForgotPasswordForm
 
 # Create your views here.
 
@@ -42,7 +50,7 @@ def log_in(request):
 
                     if user_authenticated:
                         login(request, user_authenticated)
-                        return HttpResponseRedirect('/admin')
+                        return HttpResponseRedirect(reverse_lazy('administration'))
                     else:
                         form.add_error(None, "Your data is incorrect.")
                         return render(request, 'login.html', {'form': form})
@@ -179,3 +187,166 @@ class RegisterAdmin(TemplateView):
 # Class that will render the customers.html to show the admin existing in the TimePiece Platform.
 class Customers(TemplateView):
     template_name = 'customers.html'
+
+# Class that will render the forgot-password.html to received the email and begin the password reset process.
+class ForgotPassword(TemplateView):
+    template_name = 'forgot-password.html'
+    form_class = ForgotPasswordForm
+
+    # Function that render the forgot password screen, verify if the email exist on DB and send the email for reset the
+    #password.
+    #
+    # @date [22/08/2017]
+    #
+    # @author [Chiseng Ng]
+    #
+    # @reference [https://github.com/patriv/ProjectManagement/blob/master/users/views.py]
+    #
+    # @param [HttpRequest] request Request of the page.
+    #
+    # @returns [HttpResponse]
+    def post(self, request, *args, **kwargs):
+        post_values = request.POST.copy()
+        form = ForgotPasswordForm(post_values)
+
+        if form.is_valid():
+            email_entered = post_values['email']
+            user_exist = User.objects.filter(email=email_entered).exists()
+
+            if user_exist:
+                username = User.objects.get(email=email_entered)
+
+                if username.is_active:
+
+                    # This block will obtain the user_profile objects, create the token and the expiration date and
+                    #handlered with its variables corresponding.
+                    user_profile = UserProfile.objects.get(user_fk=username)
+                    user_profile.key_activation = create_token()
+                    print("Token= " + user_profile.key_activation)
+                    user_profile.date_key_expiration = datetime.datetime.today() + datetime.timedelta(days=1)
+                    print(user_profile.date_key_expiration)
+                    user_profile.save()
+
+                    # This block will manage the Gmail email service, that will be used to send the email with the data
+                    #corresponding to the admin. that forgot his password.
+
+                    # Form field used to pass the data to the email structure html.
+                    fields = {
+                        'username': username,
+                        'key': user_profile.key_activation,
+                        'date_expiration': user_profile.date_key_expiration,
+                        'host': request.META['HTTP_HOST']
+                    }
+
+                    # This will define the information of the document for the email, send the email and return to the
+                    #login screen.
+                    email_subject = "Recuperación de Contraseña[ TimePiece ]"
+                    message_template = "password-reset-email.html"
+                    send_email(email_subject, message_template, fields, email_entered)
+                    return render(request, 'send-email-done.html')
+
+                else:
+                    form.add_error(None, 'Lo sentimos, debe activar la cuenta')
+                    return render(request, 'login.html', {'form': form})
+
+            else:
+                print("else no user")
+                form.add_error(None, 'El correo ingresado no es válido, por favor verifique')
+                return render(request, 'forgot-password.html', {'form': form})
+        else:
+            print("form is not valid")
+            form.add_error(None, 'Ingrese un correo electrónico válido')
+            return render(request, 'forgot-password.html', {'form': form})
+
+# Class that will render the password-reset.html, for reset the password.
+class Password_Reset_Confirm(TemplateView):
+    template_name = 'password-reset-confirm.html'
+
+    def post(self, request, *args, **kwargs):
+        print("post reset")
+        post_values = request.POST.copy()
+        form = ActivationKeyVerificationForm(post_values)
+        print(form)
+        print(form.is_valid())
+        if form.is_valid():
+            activation_key = self.kwargs['token']
+            print(activation_key)
+            user = UserProfile.objects.get(key_activation=activation_key)
+            print(user)
+            username = User.objects.get(pk=user.user_fk.pk)
+            print(username.pk)
+            print(activation_key)
+            password = post_values['password']
+            password2 = post_values['password2']
+            print(password)
+            print(password2)
+            if password == password2:
+                print("las claves son iguales")
+                username.set_password(password)
+                form.add_error(None, "Las contraseña se ha restablecido exitosamente.")
+                return render(request, 'page-login.html', {'form': form})
+            else:
+                print("else")
+                messages.success(request, 'Las contraseñas no coinceden, por favor verifique.')
+                return HttpResponseRedirect(reverse_lazy('password_reset_confirm', kwargs={'token': activation_key}))
+        else:
+            # form.add_error(None,'Se ha producido un error ')
+            return render(request, 'password-reset-confirm.html', {'form': form, 'token': self.kwargs['token']})
+
+
+# Function that will generate the tokens.
+#
+# @date [22/08/2017]
+#
+# @author [Chiseng Ng]
+#
+# @reference [https://github.com/patriv/ProjectManagement/blob/master/users/views.py]
+#
+# @param [None]
+#
+# @returns [String_Token]
+def create_token():
+
+    # This generate the first token key.
+    chars = list('ABCDEFGHIJKLMNOPQRSTUVWYZabcdefghijklmnopqrstuvwyz0123456789')
+    random.shuffle(chars)
+    chars = ''.join(chars)
+    sha1 = hashlib.sha1(chars.encode('utf8'))
+    token = sha1.hexdigest()
+    key = token[:12]
+
+    # This verify if the token key exist on the date base and if is positive will generate other.
+    while UserProfile.objects.filter(key_activation=key).exists():
+        print('Exist')
+        chars = list('ABCDEFGHIJKLMNOPQRSTUVWYZabcdefghijklmnopqrstuvwyz0123456789')
+        random.shuffle(chars)
+        chars = ''.join(chars)
+        sha1 = hashlib.sha1(chars.encode('utf8'))
+        token = sha1.hexdigest()
+        key = token[:12]
+
+    return key
+
+
+# Function that will end to build the email and will send it.
+#
+# @date [22/08/2017]
+#
+# @author [Chiseng Ng]
+#
+# @reference [https://github.com/patriv/ProjectManagement/blob/master/users/views.py]
+#
+# @param [String] subject Subject of the email.
+#
+# @param [String] message_template Name of the template file that will contain the email format or design.
+#
+# @param [Form] context Form with the fields or context of the email, that will be linked to the message_template.
+#
+# @param [String] email Email entered for the admin. obtained of the request.
+#
+# @returns [String_Token]
+def send_email(subject, message_template, context, email):
+    message = get_template(message_template).render(context)
+    msg = EmailMessage(subject, message, to=[email], from_email='TimePiece - Activacion de Cuenta')
+    msg.content_subtype = 'html'
+    msg.send()

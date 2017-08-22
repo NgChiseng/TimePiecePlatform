@@ -91,8 +91,8 @@
                       <div class="col col s4 m4 l4">
                           {% if user.UserProfile.image_profile == Null %}
                           <img src="{% static 'images/unknown-user.jpg' %}" alt="" class="circle responsive-img valign profile-image">
-                          <!--{#% else %#}
-                          <img src="{#  #}{ user.profile.imageProfile.url }}" alt="" class="circle responsive-img valign profile-image"-->
+                          {% else %}
+                          <img src="{{ user.UserProfile.image_profile.url }}" alt="" class="circle responsive-img valign profile-image">
                           {% endif %}
                       </div>
                       <div class="col col s8 m8 l8">

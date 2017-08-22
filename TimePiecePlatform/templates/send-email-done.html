@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="msapplication-tap-highlight" content="no">
 
-  <title>Log In - TimePiece</title>
+  <title>Email Done - TimePiece</title>
 
   <!-- Favicons-->
   <link rel="icon" href="{% static 'images/icon-timepiece.png' %}" sizes="32x32">
@@ -20,7 +20,7 @@
   <!-- For Windows Phone -->
 
   <!-- CORE CSS-->
-  
+
   <link href="{% static 'css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="{% static 'css/page-center.css' %}" type="text/css" rel="stylesheet" media="screen,projection">
@@ -28,7 +28,7 @@
   <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
   <link href="{% static 'css/prism.css' %}" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="{% static 'js/plugins/perfect-scrollbar/perfect-scrollbar.css' %}" type="text/css" rel="stylesheet" media="screen,projection">
-  
+
 </head>
 
 <body id = "login">
@@ -47,36 +47,15 @@
         <div class="input-field col s12 center">
           <img src="{% static 'images/logo-timepiece-normal.png' %}" alt="TimePiece Log" class="responsive-img valign profile-image-login">
         </div>
-       
-        <div class="row margin">
-          <div class="input-field col s12">
-            <i class="mdi-social-person-outline prefix"></i>
-            <input id="username" type="text" name="username">
-            <label for="username" class="center-align" >Nombre o Email</label>
-          </div>
-        </div>
-        <div class="row margin">
-          <div class="input-field col s12">
-            <i class="mdi-action-lock-outline prefix"></i>
-            <input id="password" type="password" name="password">
-            <label for="password">Clave</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12 m12 l12  login-text">
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <button class="btn waves-effect waves-light col s12" type="submit" >Iniciar Sesion</button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <p class="margin center-align medium-small"><a href="{% url 'forgot_password' %}">Olvido su clave?</a></p>
-          </div>
-        </div>
 
+        <div class="row">
+          <div class="input-field col s12">
+            <h5 class="center-align">Le hemos enviado un email de activacion a la dirección indicada.</h5>
+          </div>
+          <div class="input-field col s12">
+            <p class="margin center medium-small sign-up"></p>
+          </div>
+        </div>
       </form>
     </div>
   </div>

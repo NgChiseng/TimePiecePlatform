@@ -12,5 +12,9 @@ urlpatterns = [
 
     url(r'^register-admin', RegisterAdmin.as_view(), name='register_admin'),
 
-    url (r'^customers', Customers.as_view(), name='customers'),
+    url(r'^customers', Customers.as_view(), name='customers'),
+
+    url(r'^forgot-password', ForgotPassword.as_view(), name='forgot_password'),
+
+    url(r'^reset/(?P<token>.+)$', Password_Reset_Confirm.as_view(), name='password_reset_confirm'),
 ]
