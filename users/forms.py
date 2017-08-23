@@ -6,7 +6,7 @@ from users.models import UserProfile
 from django.db import models
 
 # Form used for declare the login fields and validations on their.
-class LoginForm(forms.ModelForm):
+class LoginForm(forms.Form):
     class Meta:
         model = User
         fields = ('username', 'password', 'email')
@@ -41,14 +41,17 @@ class ActivationKeyVerificationForm(forms.ModelForm):
     def clean(self):
         password = self.cleaned_data.get('password')
         password_repeat = self.cleaned_data.get('password_repeat')
-        password_len = len(password)
+        if password is None:
+            password_len = 0
+        else:
+            password_len = len(password)
 
         if password and password != password_repeat:
-            msj = "Password don't match, please try again."
+            msj = "Las claves no coinciden, por favor intente de nuevo."
             self.add_error('password', msj)
 
         if (password_len < 8) or (password_len >= 16):
-            msj = "The password must be 8-digit and less than 15."
+            msj = "La clave debe ser mayor a 8 digitos y menor que 15."
             self.add_error('password_repeat', msj)
         return self.cleaned_data
 
@@ -57,3 +60,16 @@ class ForgotPasswordForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['email', ]
+
+# Form used to declare the Profile fields.
+class UpdateProfileForm(forms.ModelForm):
+    first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'id': "first_name", 'type': "text", 'class': "validate"}))
+    last_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'id': "last_name", 'type': "text", 'class': "validate"}))
+
+    username = forms.CharField(required=True)
+    phone = forms.CharField(required=False)
+    image_profile = forms.ImageField(required=False)
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'groups',)

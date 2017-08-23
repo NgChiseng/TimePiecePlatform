@@ -1535,7 +1535,9 @@ background-size: cover;
 }
 
 .image{
-  width: 350px;
+  width: 150px;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 #new_project{

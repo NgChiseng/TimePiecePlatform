@@ -5,7 +5,7 @@
 
 <meta name="description" content="Page that contains the listing of the all TimePiece Admins.">
 <meta name="keywords" content="TimePiece,Admins,">
-<title>Administrators Registration - TimePiece</title>
+<title>Profile - TimePiece</title>
 
 {% endblock head %}
 
@@ -15,11 +15,10 @@
           <div class="container">
             <div class="row">
               <div class="col s12 m12 l12">
-                <h5 class="breadcrumbs-title">Registro de Administradores</h5>
+                <h5 class="breadcrumbs-title">Perfil</h5>
                 <ol class="breadcrumb">
-                    <li><a href="#">Usuarios</a></li>
-                    <li><a href="#">Administracion</a></li>
-                    <li class="active">Registro de Administradores</li>
+                    <li><a href="#">Perfil</a></li>
+                    <li class="active">Actualizacion</li>
                 </ol>
               </div>
             </div>
@@ -38,12 +37,24 @@
                 <p></p>
               </div>
               <div class="col s3.7 l3.7 z-depth-4 card-panel">
-                <form class="login-form">
-                  <div class="row">
-                    <div class="input-field col s12 center">
-                      <h4>Registro</h4>
-                      <p class="center">Estos campos son requeridos <span class="red-text">  *</span></p>
-                    </div>
+                <form class="login-form" method="post">
+                  {% csrf_token %}
+                  <div class="row margin">
+                       {% if user.UserProfile.image_profile != Null %}
+                            <img src="{{ user.UserProfile.image_profile.url }}" class="circle responsive-img valign profile-image image">
+                       {% else %}
+                           <img src="{% static 'images/unknown-user.jpg' %}" class="circle responsive-img valign profile-image image">
+                       {% endif %}
+                      <div class="row">
+                      <div class="col s3"><p></p></div>
+                      <div class="file-field input-field col s7">
+                      <div class="btn col s4">
+                          <span>Examinar</span>
+                          <input type="file" accept='.jpg, .png, .jpeg' name="image_profile" id="id_image_profile"/>
+                      </div>
+                          <input class="file-path validate " type="text" value="" />
+                      </div>
+                      </div>
                   </div>
                   <div class="row margin">
                     <div class="input-field col s12">

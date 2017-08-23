@@ -97,9 +97,9 @@
                       </div>
                       <div class="col col s8 m8 l8">
                           <ul id="profile-dropdown" class="dropdown-content">
-                              <li><a href="#"><i class="mdi-action-face-unlock"></i> Perfil</a>
+                              <li><a href="{% url 'profile' user.pk %}"><i class="mdi-action-face-unlock"></i> Perfil</a>
                               </li>
-                              <li><a href="#"><i class="mdi-hardware-keyboard-tab"></i> Salir</a>
+                              <li><a href="{% url 'logout' %}"><i class="mdi-hardware-keyboard-tab"></i> Salir</a>
                               </li>
                           </ul>
                           <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown">{{ user.username }}<i class="mdi-navigation-arrow-drop-down right"></i></a>
@@ -246,6 +246,9 @@
 
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
     <script type="text/javascript" src="{% static 'js/plugins.js' %}"></script>
+
+    {% block scripts %}
+    {% endblock scripts %}
 </body>
 
 </html>

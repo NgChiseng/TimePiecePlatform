@@ -13,7 +13,7 @@ from django.template.loader import get_template
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView
 from users.models import UserProfile
-from users.forms import LoginForm, ActivationKeyVerificationForm, ForgotPasswordForm
+from users.forms import LoginForm, ActivationKeyVerificationForm, ForgotPasswordForm, UpdateProfileForm
 
 # Create your views here.
 
@@ -37,6 +37,7 @@ def log_in(request):
             print("Entra en Login form")
             user_field = request.POST['username']
             password = request.POST['password']
+            # This will verify if the user submit empty fields
             if user_field == '' or password == '':
                 form.add_error(None, "Your data is incorrect.")
                 return render(request, 'login.html', {'form': form})
@@ -61,7 +62,7 @@ def log_in(request):
                     activation_key = new_user.key_activation
                     if password == activation_key:
                         print("son iguales")
-                        return HttpResponseRedirect(reverse('first_session', kwargs={'activationKey': activation_key}))
+                        return HttpResponseRedirect(reverse('activation_key', kwargs={'activationKey': activation_key}))
                     else:
                         form.add_error(None, "Your data is incorrect.")
                         return render(request, 'login.html', {'form': form})
@@ -69,6 +70,7 @@ def log_in(request):
             else:
                 form.add_error(None, "Your data is incorrect.")
                 return render(request, 'login.html', {'form': form})
+        print("If sin else")
     else:
         print("Entra en login else")
         form = LoginForm()
@@ -105,7 +107,7 @@ def search_user(user_field=None):
 
 # Class that will render the activation-key-verification.html for check the admins that enter to the system for first
 # time.
-class FirstSession(TemplateView):
+class ActivationKeyVerification(TemplateView):
     template_name = 'activation-key-verification.html'
 
     # Function that render the activation verification screen for change the admins's password in their first session.
@@ -143,7 +145,7 @@ class FirstSession(TemplateView):
                 print(username.password)
                 username.save()
                 form.add_error(None, 'The password was successfully changed.')
-                return HttpResponseRedirect('/users')
+                return HttpResponseRedirect(reverse_lazy('login'))
             else:
                 print("else")
                 form.add_error(None,'Password do not match, please try again.')
@@ -259,9 +261,21 @@ class ForgotPassword(TemplateView):
             return render(request, 'forgot-password.html', {'form': form})
 
 # Class that will render the password-reset.html, for reset the password.
-class Password_Reset_Confirm(TemplateView):
-    template_name = 'password-reset-confirm.html'
+class Password_Reset(TemplateView):
+    template_name = 'password-reset.html'
 
+    # Function that render the forgot password screen, verify if the email exist on DB and send the email for reset the
+    # password.
+    #
+    # @date [22/08/2017]
+    #
+    # @author [Chiseng Ng]
+    #
+    # @reference [https://github.com/patriv/ProjectManagement/blob/master/users/views.py]
+    #
+    # @param [HttpRequest] request Request of the page.
+    #
+    # @returns [HttpResponse]
     def post(self, request, *args, **kwargs):
         print("post reset")
         post_values = request.POST.copy()
@@ -270,29 +284,93 @@ class Password_Reset_Confirm(TemplateView):
         print(form.is_valid())
         if form.is_valid():
             activation_key = self.kwargs['token']
-            print(activation_key)
+            print("Token:" + activation_key)
             user = UserProfile.objects.get(key_activation=activation_key)
             print(user)
             username = User.objects.get(pk=user.user_fk.pk)
             print(username.pk)
             print(activation_key)
             password = post_values['password']
-            password2 = post_values['password2']
+            password_repeat = post_values['password_repeat']
             print(password)
-            print(password2)
-            if password == password2:
+            print(password_repeat)
+            if password == password_repeat:
                 print("las claves son iguales")
                 username.set_password(password)
+                username.save()
+                print("Se guardo la clave")
                 form.add_error(None, "Las contraseña se ha restablecido exitosamente.")
-                return render(request, 'page-login.html', {'form': form})
+                return HttpResponseRedirect(reverse_lazy('login'))
             else:
                 print("else")
                 messages.success(request, 'Las contraseñas no coinceden, por favor verifique.')
-                return HttpResponseRedirect(reverse_lazy('password_reset_confirm', kwargs={'token': activation_key}))
+                return HttpResponseRedirect(reverse_lazy('password_reset', kwargs={'token': activation_key}))
         else:
-            # form.add_error(None,'Se ha producido un error ')
-            return render(request, 'password-reset-confirm.html', {'form': form, 'token': self.kwargs['token']})
+            form.add_error(None,'Se ha producido un error ')
+            return render(request, 'password-reset.html', {'form': form, 'token': self.kwargs['token']})
 
+# Class that will render the profile.html, show the actual data and permit the modification of its.
+class Profile(TemplateView):
+    template_name = 'page-profile.html'
+    form_class = UpdateProfileForm
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            Profile, self).get_context_data(**kwargs)
+        print("get")
+
+        print(self.kwargs['id'])
+
+        user = UserProfile.objects.get(user_fk_id=self.kwargs['id'])
+        # print(user)
+        # if not user:
+        #   data = {
+        #      'first_name': User.first_name,
+        #     'last_name' : User.last_name
+        # }
+        # else:
+        data = {'first_name': user.user_fk.first_name,
+                'last_name': user.user_fk.last_name,
+                'username': user.user_fk.username,
+                'email': user.user_fk.email,
+                'phone': user.phone,
+                'image_profile': user.image_profile
+                }
+        form = LoginForm(initial=data)
+        context['form'] = form
+        context['users'] = user
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = UpdateProfileForm(request.POST, request.FILES)
+        print(form.is_valid())
+        if form.is_valid():
+            user_pk = kwargs['id']
+            userProfile = UserProfile.objects.get(user_fk=user_pk)
+
+            user = User.objects.get(pk=userProfile.user_fk_id)
+            print(user)
+            user.first_name = request.POST['first_name']
+            print(user.first_name)
+            user.last_name = request.POST['last_name']
+            userProfile.phone = request.POST['phone']
+            if (request.FILES == {}):
+                pass
+            else:
+                print(request.FILES)
+                userProfile.imageProfile = request.FILES['image_profile']
+                userProfile.loadPhoto = True
+
+            print(userProfile.imageProfile)
+            user.username = request.POST['username']
+            user.save()
+            userProfile.save()
+            messages.success(request, "Su perfil ha sido actualizado exitosamente")
+            return HttpResponseRedirect(reverse_lazy('profile', kwargs={'id': user_pk}))
+
+        else:
+            return render(request, 'page-profile.html',
+                          {'form': form})
 
 # Function that will generate the tokens.
 #

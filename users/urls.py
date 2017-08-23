@@ -6,7 +6,7 @@ from users.views import *
 urlpatterns = [
     url(r'^login/$', log_in, name='login'),
 
-    url(r'^first-session/(?P<activationKey>\w+)$', FirstSession.as_view(), name='first_session'),
+    url(r'^activation-key/(?P<activationKey>\w+)$', ActivationKeyVerification.as_view(), name='activation_key'),
 
     url(r'^administration', Administration.as_view(), name='administration'),
 
@@ -16,5 +16,9 @@ urlpatterns = [
 
     url(r'^forgot-password', ForgotPassword.as_view(), name='forgot_password'),
 
-    url(r'^reset/(?P<token>.+)$', Password_Reset_Confirm.as_view(), name='password_reset_confirm'),
+    url(r'^reset/(?P<token>.+)$', Password_Reset.as_view(), name='password_reset'),
+
+    url(r'^profile/(?P<id>\w+)$', Profile.as_view(), name='profile'),
+
+    url(r'^logout', django.contrib.auth.views.logout, {'next_page': 'login'}, name='logout'),
 ]
