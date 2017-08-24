@@ -62,14 +62,37 @@ class ForgotPasswordForm(forms.ModelForm):
         fields = ['email', ]
 
 # Form used to declare the Profile fields.
-class UpdateProfileForm(forms.ModelForm):
-    first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'id': "first_name", 'type': "text", 'class': "validate"}))
-    last_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'id': "last_name", 'type': "text", 'class': "validate"}))
+class UpdateProfileForm(forms.Form):
 
     username = forms.CharField(required=True)
     phone = forms.CharField(required=False)
+    print('Celular: ')
+    print(phone)
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'id': "email", 'type': "email",
+                                                                           'class': "validate"}))
+    image_profile = forms.ImageField(required=False)
+    print(image_profile)
+    class Meta:
+        model = User, UserProfile
+        fields = ('username', 'email', 'phone', 'image_profile',)
+
+# Form of the Users that will be used on profile view.
+class UserForm(forms.ModelForm):
+    username = forms.CharField(required=True)
+    phone = forms.CharField(required=False)
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'id': "email", 'type': "email",
+                                                                           'class': "validate"}))
     image_profile = forms.ImageField(required=False)
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'groups',)
+        fields = ('username', 'email',)
+
+    def clean_email(self):
+        print("Clean email")
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).count() != 0:
+            print("dentro del if")
+            msj = "Este correo ya está siendo utilizado"
+            self.add_error('email', msj)
+        return email

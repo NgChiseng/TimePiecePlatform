@@ -13,7 +13,7 @@ from django.template.loader import get_template
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView
 from users.models import UserProfile
-from users.forms import LoginForm, ActivationKeyVerificationForm, ForgotPasswordForm, UpdateProfileForm
+from users.forms import LoginForm, ActivationKeyVerificationForm, ForgotPasswordForm, UpdateProfileForm, UserForm
 
 # Create your views here.
 
@@ -314,63 +314,77 @@ class Profile(TemplateView):
     template_name = 'page-profile.html'
     form_class = UpdateProfileForm
 
+    # Function that get the profile context data, process it and show it on the screen.
+    #
+    # @date [24/08/2017]
+    #
+    # @author [Chiseng Ng]
+    #
+    # @reference [https://github.com/patriv/ProjectManagement/blob/master/users/views.py]
+    #
+    # @param [HttpRequest] request Request of the page.
+    #
+    # @param [Hash of args] **kwargs Hash of the args that is received through the context of the screen.
+    #
+    # @returns [HttpResponse]
     def get_context_data(self, **kwargs):
-        context = super(
-            Profile, self).get_context_data(**kwargs)
+        context = super(Profile, self).get_context_data(**kwargs)
         print("get")
 
         print(self.kwargs['id'])
 
         user = UserProfile.objects.get(user_fk_id=self.kwargs['id'])
-        # print(user)
-        # if not user:
-        #   data = {
-        #      'first_name': User.first_name,
-        #     'last_name' : User.last_name
-        # }
-        # else:
-        data = {'first_name': user.user_fk.first_name,
-                'last_name': user.user_fk.last_name,
-                'username': user.user_fk.username,
-                'email': user.user_fk.email,
+
+        data = {'username': user.user_fk.username,
                 'phone': user.phone,
+                'email': user.user_fk.email,
                 'image_profile': user.image_profile
                 }
-        form = LoginForm(initial=data)
+        form = UserForm(initial=data)
         context['form'] = form
-        context['users'] = user
         return context
 
+    # Function that received the POST method with the context information, that was introduced by the user, process it,
+    # and save it inside the DB.
+    #
+    # @date [24/08/2017]
+    #
+    # @author [Chiseng Ng]
+    #
+    # @reference [https://github.com/patriv/ProjectManagement/blob/master/users/views.py]
+    #
+    # @param [HttpRequest] request Request of the page.
+    #
+    # @param [Hash of args] **kwargs Hash of the args that is received through the context of the screen.
+    #
+    # @returns [HttpResponse]
     def post(self, request, *args, **kwargs):
+        print('Entro a post')
         form = UpdateProfileForm(request.POST, request.FILES)
         print(form.is_valid())
         if form.is_valid():
             user_pk = kwargs['id']
-            userProfile = UserProfile.objects.get(user_fk=user_pk)
+            user_profile = UserProfile.objects.get(user_fk=user_pk)
 
-            user = User.objects.get(pk=userProfile.user_fk_id)
+            user = User.objects.get(pk=user_profile.user_fk_id)
             print(user)
-            user.first_name = request.POST['first_name']
-            print(user.first_name)
-            user.last_name = request.POST['last_name']
-            userProfile.phone = request.POST['phone']
-            if (request.FILES == {}):
-                pass
-            else:
-                print(request.FILES)
-                userProfile.imageProfile = request.FILES['image_profile']
-                userProfile.loadPhoto = True
-
-            print(userProfile.imageProfile)
             user.username = request.POST['username']
+            print("Introdujo como Username" + user.username)
+            user.email = request.POST['email']
+            user_profile.phone = request.POST['phone']
+            print(request.FILES)
+            user_profile.image_profile = request.FILES['image_profile']
+            print(user_profile.image_profile)
+
+            print(user_profile.image_profile)
             user.save()
-            userProfile.save()
+            user_profile.save()
+            print("Se salvaron los valores")
             messages.success(request, "Su perfil ha sido actualizado exitosamente")
             return HttpResponseRedirect(reverse_lazy('profile', kwargs={'id': user_pk}))
 
         else:
-            return render(request, 'page-profile.html',
-                          {'form': form})
+            return render(request, 'page-profile.html', {'form': form})
 
 # Function that will generate the tokens.
 #

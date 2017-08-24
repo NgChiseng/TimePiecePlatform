@@ -39,47 +39,47 @@
               <div class="col s3.7 l3.7 z-depth-4 card-panel">
                 <form class="login-form" method="post">
                   {% csrf_token %}
-                  <div class="row margin">
+                  <div class="row margin center">
                        {% if user.UserProfile.image_profile != Null %}
                             <img src="{{ user.UserProfile.image_profile.url }}" class="circle responsive-img valign profile-image image">
                        {% else %}
                            <img src="{% static 'images/unknown-user.jpg' %}" class="circle responsive-img valign profile-image image">
                        {% endif %}
-                      <div class="row">
-                      <div class="col s3"><p></p></div>
-                      <div class="file-field input-field col s7">
-                      <div class="btn col s4">
-                          <span>Examinar</span>
-                          <input type="file" accept='.jpg, .png, .jpeg' name="image_profile" id="id_image_profile"/>
-                      </div>
-                          <input class="file-path validate " type="text" value="" />
-                      </div>
-                      </div>
+                  </div>
+                  <div class="row margin">
+                    <div class="file-field input-field col s12">
+                          {% csrf_token %}
+                          <div class="waves-effect waves-circle waves-light btn-floating col offset-s1 center-block">
+                            <span><i class="mdi-file-file-upload"></i></span>
+                            <input type="file" accept='.jpg, .png, .jpeg' name="my_image_profile" id="id_image_profile"/>
+                          </div>
+                          <input class="file-path validate col offset-l1" type="text"/>
+                    </div>
                   </div>
                   <div class="row margin">
                     <div class="input-field col s12">
                       <i class="mdi-social-person-outline prefix"></i>
-                      <input id="username" type="text">
+                      {{ form.username }}
                       <label for="username" class="center-align">NombreCompleto <span class="red-text"> *</span> </label>
                     </div>
                   </div>
                   <div class="row margin">
                     <div class="input-field col s12">
                       <i class="mdi-communication-email prefix"></i>
-                      <input id="email" type="email">
+                      {{ form.email }}
                       <label for="email" class="center-align">Email <span class="red-text"> *</span> </label>
                     </div>
                   </div>
                   <div class="row margin">
                     <div class="input-field col s12">
                       <i class="mdi-communication-phone prefix"></i>
-                      <input id="phone" type="tel">
+                      {{ form.phone }}
                       <label for="phone">Telefono <span class="red-text"> *</span> </label>
                     </div>
                   </div>
                   <div class="row">
                     <div class="input-field col s12">
-                      <a href="" class="btn waves-effect waves-light col s12">Registrar Ahora</a>
+                      <button class="btn waves-effect waves-light col s12" type="submit" name="action">Registrar Ahora</button>
                     </div>
                     <div class="input-field col s12">
                       <a href="javascript:history.go(-1)" class="btn waves-effect waves-light col s12">Cancelar</a>
