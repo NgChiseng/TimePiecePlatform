@@ -66,12 +66,10 @@ class UpdateProfileForm(forms.Form):
 
     username = forms.CharField(required=True)
     phone = forms.CharField(required=False)
-    print('Celular: ')
-    print(phone)
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'id': "email", 'type': "email",
                                                                            'class': "validate"}))
     image_profile = forms.ImageField(required=False)
-    print(image_profile)
+
     class Meta:
         model = User, UserProfile
         fields = ('username', 'email', 'phone', 'image_profile',)

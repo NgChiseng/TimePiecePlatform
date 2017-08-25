@@ -338,10 +338,10 @@ class Profile(TemplateView):
         data = {'username': user.user_fk.username,
                 'phone': user.phone,
                 'email': user.user_fk.email,
-                'image_profile': user.image_profile
                 }
         form = UserForm(initial=data)
         context['form'] = form
+
         return context
 
     # Function that received the POST method with the context information, that was introduced by the user, process it,
@@ -360,6 +360,7 @@ class Profile(TemplateView):
     # @returns [HttpResponse]
     def post(self, request, *args, **kwargs):
         print('Entro a post')
+        print(request.FILES)
         form = UpdateProfileForm(request.POST, request.FILES)
         print(form.is_valid())
         if form.is_valid():
@@ -372,9 +373,17 @@ class Profile(TemplateView):
             print("Introdujo como Username" + user.username)
             user.email = request.POST['email']
             user_profile.phone = request.POST['phone']
-            print(request.FILES)
-            user_profile.image_profile = request.FILES['image_profile']
-            print(user_profile.image_profile)
+
+            # This will validate if there was a request.FILES received of the front-end. Note: It's important to add
+            # the enctype="multipart/form-data" property inside the <form> tag on the html file for to can to send the
+            # file or image information.
+            if request.FILES == {}:
+                print("Entro en el pass")
+                pass
+            else:
+                print("El request.FILE es: ")
+                print(request.FILES)
+                user_profile.image_profile = request.FILES['image_uploaded']
 
             print(user_profile.image_profile)
             user.save()

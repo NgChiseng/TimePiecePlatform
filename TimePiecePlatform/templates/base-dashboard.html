@@ -48,6 +48,7 @@
 </head>
 
 <body>
+
   <!-- Start Page Loading -->
   <div id="loader-wrapper">
       <div id="loader"></div>
@@ -88,11 +89,14 @@
           <ul id="slide-out" class="side-nav fixed leftside-navigation">
               <li class="user-details cyan darken-2"><!-- Se puede cambiar cyan por un id con una imagen, que hay que crear en el materilize.css -->
                   <div class="row">
+                      <!-- Important: UserProfile word was changed to userprofile to make it work -->
                       <div class="col col s4 m4 l4">
-                          {% if user.UserProfile.image_profile == Null %}
-                          <img src="{% static 'images/unknown-user.jpg' %}" alt="" class="circle responsive-img valign profile-image">
+                          <!-- Important: Any ImageField or FileField can to be validated only calling the object, it's
+                          not necessary to use a equal(==), is None or Null, etc. -->
+                          {% if not user.userprofile.image_profile %}
+                            <img src="{% static 'images/unknown-user.jpg' %}" alt="" class="circle responsive-img valign profile-image">
                           {% else %}
-                          <img src="{{ user.UserProfile.image_profile.url }}" alt="" class="circle responsive-img valign profile-image">
+                            <img src="{{ user.userprofile.image_profile.url }}" alt="" class="circle responsive-img valign profile-image">
                           {% endif %}
                       </div>
                       <div class="col col s8 m8 l8">
