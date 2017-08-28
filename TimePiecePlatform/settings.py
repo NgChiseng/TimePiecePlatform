@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'materialize_forms',
     'dashboard.apps.DashboardConfig',
     'users.apps.UsersConfig',
+    'rest_framework',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
