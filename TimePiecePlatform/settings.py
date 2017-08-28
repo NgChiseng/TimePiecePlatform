@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -25,7 +24,7 @@ SECRET_KEY = 's!!jarbic9n3-*9=vqy!)=qn2^183r_act6q!t-c44va5o^jo$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -134,11 +133,25 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "TimePiecePlatform/static"),
 )
 
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
+# trailing slash.
 MEDIA_URL = '/static/media/'
+
+# Absolute filesystem path to the directory that will hold user-uploaded files.
 MEDIA_ROOT = (
             os.path.join(BASE_DIR, "TimePiecePlatform/static/media/")
 )
 
-# This block will be used for the sending of email(SMTP) through SenGrid API configuration.
+# This block will be used for the sending of email(SMTP) through SenGrid API configuration. But in this case, was not
+# used SenGrid due to problems with the account creation, instead was used Gmail API.
 # https://sendgrid.com/docs/Integrate/Frameworks/django.html
+# https://blog.khophi.co/sending-django-emails-example/
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = '2017timepiece2017@gmail.com'
+EMAIL_HOST_PASSWORD = '1234timepiece'
+EMAIL_PORT = 587
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 

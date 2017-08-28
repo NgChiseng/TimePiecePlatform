@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="msapplication-tap-highlight" content="no">
 
-  <title>Activation Key Verification - TimePiece</title>
+  <title>Email Done - TimePiece</title>
 
   <!-- Favicons-->
   <link rel="icon" href="{% static 'images/icon-timepiece.png' %}" sizes="32x32">
@@ -31,8 +31,7 @@
 
 </head>
 
-<body id="login">
-
+<body id = "login">
   <!-- Start Page Loading -->
   <div id="loader-wrapper">
     <div id="loader"></div>
@@ -40,79 +39,55 @@
     <div class="loader-section section-right"></div>
   </div>
   <!-- End Page Loading -->
-  <div class="row">
-    <div class="col s6 z-depth-4 card-panel center" id = "session">
-      <form class="login-form" action="" method="post">
+
+  <div id="login-page" class="row">
+    <div class="col s12 z-depth-4 card-panel">
+      <form class="login-form" method="post">
         {% csrf_token %}
         <div class="input-field col s12 center">
-          <img src="{% static 'images/logo-timepiece-normal.png' %}" alt="" class="responsive-img valign profile-image-login">
+          <img src="{% static 'images/logo-timepiece-normal.png' %}" alt="TimePiece Log" class="responsive-img valign profile-image-login">
         </div>
 
-        <div class="row margin">
-          <div class="input-field col s10">
-            <i class="mdi-action-lock-outline prefix"></i>
-            <input id="password" type="password" name="password">
-            <label for="password" class="center-align" >Nueva clave</label>
-          </div>
-        </div>
-        <div class="row margin">
-          <div class="input-field col s10">
-            <i class="mdi-av-repeat-one prefix"></i>
-            <input id="password_repeat" type="password" name="password_repeat">
-            <label for="password_repeat">Repetir clave</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12 m12 l12 ">
-            <button class="btn waves-effect waves-light col s12" type="submit" >Aceptar</button>
-          </div>
-        </div>
         <div class="row">
           <div class="input-field col s12">
-            <a href="{% url 'login' %}" class="btn waves-effect waves-light col s12"  >Cancelar</a>
+            <h5 class="center-align">Le hemos enviado un email de activacion a la dirección indicada.</h5>
+          </div>
+          <div class="input-field col s12">
+            <p class="margin center medium-small sign-up"></p>
           </div>
         </div>
       </form>
     </div>
   </div>
 
-<!-- ================================================
+  <!-- ================================================
     Scripts
     ================================================ -->
+
   <!-- jQuery Library -->
   <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
   <!--materialize js-->
-  <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/materialize.js' %}"></script>
   <!--prism-->
   <script type="text/javascript" src="{% static 'js/prism.js' %}"></script>
   <!--scrollbar-->
   <script type="text/javascript" src="{% static 'js/plugins/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+
   <!--plugins.js - Some Specific JS codes for Plugin Settings-->
   <script type="text/javascript" src="{% static 'js/plugins.js' %}"></script>
-
   <script type="text/javascript">
-      {% if form.errors %}
-          {% for field in form %}
-              {% for error in field.errors %}
-                  Materialize.toast('{{ error|escape }}', 4000);
-              {% endfor %}
-          {% endfor %}
-          {% for error in form.non_field_errors %}
-              Materialize.toast('{{ error|escape }}', 4000);
-          {% endfor %}
-      {% endif %}
-
-      {% if messages %}
-          {% for message in messages %}
-              Materialize.toast('{{message}}',4000);
-          {% endfor %}
-      {% endif %}
+  {% if form.errors %}
+    {% for field in form %}
+      {% for error in field.errors %}
+        Materialize.toast('{{ error|escape }}', 4000);
+      {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+      Materialize.toast('{{ error|escape }}', 4000);
+    {% endfor %}
+  {% endif %}
   </script>
 
-  <script src="{% static 'js/jquery-ui.js' %}"></script>
-
-  <!-- Others-->
-  <script type="text/javascript" src="{% static 'js/others.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/verifyPassword.js' %}"></script>
 </body>
+
+</html>

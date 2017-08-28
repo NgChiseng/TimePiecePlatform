@@ -1,0 +1,105 @@
+{% extends "base-dashboard.html" %}
+{% load staticfiles %}
+
+{% block head %}
+
+<meta name="description" content="Page that contains the listing of the all TimePiece Admins.">
+<meta name="keywords" content="TimePiece,Admins,">
+<title>Shopping Car - TimePiece</title>
+
+{% endblock head %}
+
+{% block content %}
+
+        <!--breadcrumbs start-->
+        <div id="breadcrumbs-wrapper" class=" grey lighten-3">
+          <div class="container">
+            <div class="row">
+              <div class="col s12 m6 l6">
+                <h5 class="breadcrumbs-title">Carrito de Compras</h5>
+                <ol class="breadcrumb">
+                    <li><a href="">Carrito de Compras</a></li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--breadcrumbs end-->
+
+        <!--start container-->
+        <div class="container">
+          <div class="section">
+
+            <div class="divider"></div>
+            
+            <!--DataTables example-->
+            <div id="row-grouping" class="section">
+              <div class="row">
+
+                <div class="col s12 m12 l12">
+                  <table id="data-table-row-grouping" class="display" cellspacing="0" width="100%">
+                      <thead>
+                          <tr>
+                            <th>Vendedor/Beneficiario</th>
+                            <th>Titulo</th>
+                            <th>NombrePropietario</th>
+                            <th>Tipo Public.</th>
+                            <th>Valor/Esperado</th>
+                            <th>Cantidad/Donado</th>
+                            <th>Fecha Incorp.</th>
+                          </tr>
+                      </thead>
+
+                      <tfoot>
+                          <tr>
+                            <th>Vendedor/Beneficiario</th>
+                            <th>Titulo</th>
+                            <th>NombrePropietario</th>
+                            <th>Tipo Public.</th>
+                            <th>Valor/Esperado</th>
+                            <th>Cantidad/Donado</th>
+                            <th>Fecha Incorp.</th>
+                          </tr>
+                      </tfoot>
+
+                      <tbody>
+                          <tr>
+                              <td>Tiger Nixon</td>
+                              <td>Zapatos deportivos azules Nike</td>
+                              <td>JenaGaines</td>
+                              <td>Producto</td>
+                              <td>40$/Par</td>
+                              <td>2</td>
+                              <td>Aug. 19, 2017, 2:40 pm</td>
+                          </tr>
+                          <tr>
+                              <td>Tiger Nixon</td>
+                              <td>Clases de guitarra acustica</td>
+                              <td>JenaGaines</td>
+                              <td>Servicio</td>
+                              <td>10$/Persona</td>
+                              <td>1</td>
+                              <td>Aug. 19, 2017, 2:50 pm</td>
+                          </tr>
+                          <tr>
+                              <td>Tiger Nixon</td>
+                              <td>Clases de cocina para los niños de la Sierra</td>
+                              <td>JenaGaines</td>
+                              <td>Donacion</td>
+                              <td>500$</td>
+                              <td>50$</td>
+                              <td>Aug. 20, 2017, 10:02 am</td>
+                          </tr>
+                      </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <br>
+          <div class="divider"></div>
+        </div>
+        <!--end container-->
+
+{% endblock content %}

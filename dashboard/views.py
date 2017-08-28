@@ -41,3 +41,15 @@ class DonationsPublication(TemplateView):
 # Class that will render the donations-done.html to show the admin existing in the TimePiece Platform.
 class DonationsDone(TemplateView):
     template_name = 'donations-done.html'
+
+# Class that will render the payments-registered.html to show the admin existing in the TimePiece Platform.
+class PaymentsRegistered(TemplateView):
+    template_name = 'payments-registered.html'
+
+# Class that will render the payments-registered.html to show the admin existing in the TimePiece Platform.
+class PaymentsTransaction(TemplateView):
+    template_name = 'payments-transaction.html'
+
+# Class that will render the shopping-car.html to show the admin existing in the TimePiece Platform.
+class ShoppingCar(TemplateView):
+    template_name = 'shopping-car.html'

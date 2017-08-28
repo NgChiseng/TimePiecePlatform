@@ -29,12 +29,23 @@ class UserProfile(models.Model):
 
     user_fk = models.OneToOneField(User)
     phone = models.CharField(max_length=11, blank=True)
-    image_profile = models.ImageField(upload_to='images/', blank=True)
+    image_profile = models.ImageField(upload_to='profile_images/', blank=True)
     address = models.TextField(max_length=128, blank=True)
-    points_accumulated = models.IntegerField(default=0)
     key_activation = models.CharField(max_length=40, blank=True)
+    points_accumulated = models.IntegerField(default=0)
+    badge_acquired = models.CharField(max_length=32, default='beginner')
     date_key_expiration = models.DateTimeField(auto_now_add=True)
-    # badge_acquired = models.ForeignKey('Rating')
 
     def __str__(self):
         return self.user_fk.username
+
+# That will contain the badge corresponding to the amount of points necessary to obtain it.
+class Rating(models.Model):
+
+    badge_name = models.CharField(primary_key=True, max_length=32)
+    min_points = models.IntegerField(unique=True)
+    max_points = models.IntegerField(unique=True)
+
+    def __str__(self):
+        return self.badge_name
+

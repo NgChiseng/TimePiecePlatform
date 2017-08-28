@@ -48,6 +48,7 @@
 </head>
 
 <body>
+
   <!-- Start Page Loading -->
   <div id="loader-wrapper">
       <div id="loader"></div>
@@ -88,21 +89,24 @@
           <ul id="slide-out" class="side-nav fixed leftside-navigation">
               <li class="user-details cyan darken-2"><!-- Se puede cambiar cyan por un id con una imagen, que hay que crear en el materilize.css -->
                   <div class="row">
+                      <!-- Important: UserProfile word was changed to userprofile to make it work -->
                       <div class="col col s4 m4 l4">
-                          <!--{#% if user.profile.loadPhoto == False %#}-->
-                          <img src="{% static 'images/unknown-user.jpg' %}" alt="" class="circle responsive-img valign profile-image">
-                          <!--{#% else %#}
-                          <img src="{#  #}{ user.profile.imageProfile.url }}" alt="" class="circle responsive-img valign profile-image">
-                          {#% endif %#}-->
+                          <!-- Important: Any ImageField or FileField can to be validated only calling the object, it's
+                          not necessary to use a equal(==), is None or Null, etc. -->
+                          {% if not user.userprofile.image_profile %}
+                            <img src="{% static 'images/unknown-user.jpg' %}" alt="" class="circle responsive-img valign profile-image">
+                          {% else %}
+                            <img src="{{ user.userprofile.image_profile.url }}" alt="" class="circle responsive-img valign profile-image">
+                          {% endif %}
                       </div>
                       <div class="col col s8 m8 l8">
                           <ul id="profile-dropdown" class="dropdown-content">
-                              <li><a href="#"><i class="mdi-action-face-unlock"></i> Perfil</a>
+                              <li><a href="{% url 'profile' user.pk %}"><i class="mdi-action-face-unlock"></i> Perfil</a>
                               </li>
-                              <li><a href="#"><i class="mdi-hardware-keyboard-tab"></i> Salir</a>
+                              <li><a href="{% url 'logout' %}"><i class="mdi-hardware-keyboard-tab"></i> Salir</a>
                               </li>
                           </ul>
-                          <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown">John Doe<i class="mdi-navigation-arrow-drop-down right"></i></a>
+                          <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown">{{ user.username }}<i class="mdi-navigation-arrow-drop-down right"></i></a>
                           <!--a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown">{#  #}{user.first_name}} {#  #}{user.last_name }}<i class="mdi-navigation-arrow-drop-down right"></i></a-->
                           <p class="user-roal">Administrador</p>
                       </div>
@@ -158,8 +162,17 @@
                               </ul>
                           </div>
                       </li>
-                      <li class="bold"><a href="" class="waves-effect waves-cyan"><i class="mdi-action-payment"></i> Pagos </a>
-                      <li class="bold"><a href="" class="waves-effect waves-cyan"><i class="mdi-action-shopping-cart"></i> Carrito de Compra</a>
+                      <li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i class="mdi-action-payment"></i> Pagos </a>
+                          <div class="collapsible-body">
+                              <ul>
+                                  <li><a href="{% url 'payments_registered' %}">Registrados</a>
+                                  </li>
+                                  <li><a href="{% url 'payments_transaction' %}">Transaccion</a>
+                                  </li>
+                              </ul>
+                          </div>
+                      </li>
+                      <li class="bold"><a href="{% url 'shopping_car' %}" class="waves-effect waves-cyan"><i class="mdi-action-shopping-cart"></i> Carrito de Compra</a>
                   </ul>
               </li>
               <li class="li-hover"><div class="divider"></div></li>
@@ -237,6 +250,9 @@
 
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
     <script type="text/javascript" src="{% static 'js/plugins.js' %}"></script>
+
+    {% block scripts %}
+    {% endblock scripts %}
 </body>
 
 </html>
