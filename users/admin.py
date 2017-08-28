@@ -7,3 +7,5 @@ from users.models import *
 
 # This will add the UserProfile model that will be managed by the Django management.
 admin.site.register(UserProfile)
+# This will add the Rating model that will be managed by the Django management.
+admin.site.register(Rating)
