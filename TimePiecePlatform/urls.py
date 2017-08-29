@@ -23,4 +23,6 @@ urlpatterns = [
     url(r'^', include('users.urls')),
     # above maps any URLs starting with dashboard/ to be handled by the users application
     url(r'^', include('dashboard.urls')),
+    # above maps any URLs starting with api/ to be handled by the users application
+    url(r'^', include('api.urls')),
 ]
