@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.core.files.base import ContentFile
 from django.utils import six
-from rest_framework import serializers
+from rest_framework import serializers, exceptions
 from users.models import UserProfile
 
 
@@ -83,4 +83,31 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = ('user_fk', 'phone', 'image_profile', 'address', 'points_accumulated', 'badge_acquired')
+
+    # Function overridden of the original, that will be used to define the creation of one JSON format instance into a
+    # model instance.
+    #
+    # @date [30/08/2017]
+    #
+    # @author [Chiseng Ng]
+    #
+    # @reference [https://github.com/sahidr/CanopyVerdeAPI/blob/master/API/serializers.py]
+    #
+    # @param [UserProfileSerializer object] self It is a instance or object of this class.
+    #
+    # @param [Validator] validate_data It is a validator of this class data
+    #
+    # @returns [UserProfile object]
+    def create(self, validated_data):
+        user_data = validated_data.pop('user_fk')
+        email = user_data['email']
+        if User.objects.filter(email=email).exists():
+            raise exceptions.ValidationError("User already created")
+        else:
+            new_user = User(username=user_data['username'], email=email, first_name=user_data['first_name'])
+            new_user.set_password(user_data['password'])
+            new_user.save()
+            user_profile = UserProfile.objects.create(user_fk=new_user, **validated_data)
+            return user_profile
+
 
