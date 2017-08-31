@@ -1,7 +1,12 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render
-from rest_framework import generics
-from api.serializer import UserSerializer, UserProfileSerializer
+from rest_framework import generics, renderers
+from rest_framework.authtoken.models import Token
+from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from api.serializer import UserSerializer, UserProfileSerializer, AuthCustomTokenSerializer
 from users.models import UserProfile
 
 """Note: - The ListCreateAPIView is a generic view which provides GET (list all) and POST method handlers.
@@ -45,3 +50,54 @@ class DetailViewUserProfile(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
+
+# This class permit to receive the LogIn request of the TimePiece App, verify the credentials with the
+# AuthCustomTokenSerializer, generate a token and return the response with the data corresponding.
+class LogInView(APIView):
+    throttle_classes = ()
+    permission_classes = ()
+    parser_classes = (
+        FormParser,
+        MultiPartParser,
+        JSONParser,
+    )
+
+    renderer_classes = (renderers.JSONRenderer,)
+
+    # Function that received the authentication post from the TimePiece App, verify the data, generate the token, and
+    # generate the response content in a success case, and return its.
+    #
+    # @date [31/08/2017]
+    #
+    # @author [Chiseng Ng]
+    #
+    # @reference [https://github.com/sahidr/CanopyVerdeAPI/blob/master/API/views.py]
+    #
+    # @param [LogInView objects] self Represent the LogInView object associated.
+    #
+    # @param [HttpRequest] request Request of the App.
+    #
+    # @returns [HttpResponse]
+    def post(self, request):
+        serializer = AuthCustomTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+
+        user_profile = UserProfile.objects.get(user_fk=user.pk)
+        user_profile.key_activation = str(token)
+        user_profile.save()
+
+        """
+            Content of the Response after successful login
+        """
+        content = {
+            'id': user.pk,
+            'token': token.key,
+            'username': user.username,
+            'email': user.email,
+            'first_name': user_profile.first_name,
+            'phone': user_profile.phone,
+            'address': user_profile.address,
+        }
+        return Response(content)
