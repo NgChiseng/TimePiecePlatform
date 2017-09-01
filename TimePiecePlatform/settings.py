@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
     'users.apps.UsersConfig',
     'rest_framework',
+    'rest_framework.authtoken',
     'api.apps.ApiConfig',
 ]
 
@@ -157,3 +158,10 @@ EMAIL_HOST_PASSWORD = '1234timepiece'
 EMAIL_PORT = 587
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
+# This is to set the rest framework authentication class.
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}

@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render
 from rest_framework import generics, renderers
 from rest_framework.authtoken.models import Token
+
 from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -96,7 +97,7 @@ class LogInView(APIView):
             'token': token.key,
             'username': user.username,
             'email': user.email,
-            'first_name': user_profile.first_name,
+            'first_name': user.first_name,
             'phone': user_profile.phone,
             'address': user_profile.address,
         }
