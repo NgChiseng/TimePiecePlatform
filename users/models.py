@@ -36,6 +36,12 @@ class UserProfile(models.Model):
     badge_acquired = models.CharField(max_length=32, default='beginner')
     date_key_expiration = models.DateTimeField(auto_now_add=True)
 
+    # Function that will get the image attribute of the actual model.
+    def get_image_profile(self):
+        self.image_profile
+
+    image_profile = property(get_image_profile)
+
     def __str__(self):
         return self.user_fk.username
 

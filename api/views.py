@@ -100,6 +100,6 @@ class LogInView(APIView):
             'first_name': user.first_name,
             'phone': user_profile.phone,
             'address': user_profile.address,
-            'image': UserProfileSerializer.data.get(user_profile.image_profile),
         }
+        print(content)
         return Response(content)
