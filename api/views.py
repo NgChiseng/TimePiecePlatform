@@ -93,7 +93,7 @@ class LogInView(APIView):
             Content of the Response after successful login
         """
         content = {
-            'id': user.pk,
+            'id': user_profile.pk,
             'token': token.key,
             'username': user.username,
             'email': user.email,

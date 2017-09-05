@@ -86,7 +86,6 @@ class UserSerializer(serializers.ModelSerializer):
     # @returns [User object]
     def update(self, instance, validated_data):
         email = validated_data['email']
-        first_name = validated_data['first_name']
         user = User.objects.filter(email=email)
         if user is None:
             instance.email = validated_data.get('email', instance.email)
